@@ -18,35 +18,44 @@ namespace UserInterfaceDemo {
 		/// When user selects 4, program terminates.
 		/// </summary>
 		static void MainMenu() {
-			Account matt = new Account("Matt");
-			matt.printDetails();
-			Console.WriteLine(matt.getDetails());
-			Account ryan = new Account();
-			ryan.printDetails();
-			return;
 			const int REGISTER = 0, LOGIN = 1, EXIT = 2;
 			///const int READ_INT = 0, READ_DOUBLE = 1, READ_BOOL = 2, GET_PASSWORD = 3, EXIT = 4;
 				
 			Console.WriteLine( "Welcome to the UserInterface Demo program." );
 
 			bool running = true;
-
+			List<Account> accounts = new List<Account>();
 			while ( running ) {
 				int option = UserInterface.GetOption("Select one of the options",
 					"Register", "Login", "Exit"
 				);
 				string fullName, username, password, address;
 				switch ( option ) {
-					case REGISTER: 
-						 fullName = UserInterface.GetInput("Full name");
-						 username = UserInterface.GetInput("Username");
-						 password = UserInterface.GetPassword("Password");
-						 address = UserInterface.GetInput("Address");
+					case REGISTER:
+						Account account = new Account();
+						fullName = UserInterface.GetInput("Full name");
+						account.setFullName(fullName);
+						username = UserInterface.GetInput("Username");
+					    account.setUsername(username);
+						password = UserInterface.GetPassword("Password");
+						account.setPassword(password);
+						address = UserInterface.GetInput("Address");
+						account.setAddress(address);
+						account.printDetails();
+						accounts.Add(account);
+						Console.WriteLine("number of accounts reg" + accounts.Count);
 						break;
 					case LOGIN:
 						Console.WriteLine("Logged in");
 						username = UserInterface.GetInput("Username");
 						password = UserInterface.GetPassword("Password");
+						for (int i = 0; i < accounts.Count; i++)
+                        {
+							if (accounts[i].checkLogin(username, password))
+                            {
+								Console.WriteLine("Welcome, {0} to aldiEbay", accounts[i].getFullname());
+                            }
+                        }
 						break;
 					case EXIT: 
 						running = false; 
