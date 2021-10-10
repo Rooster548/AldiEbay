@@ -168,7 +168,7 @@ namespace CAB201 {
 		/// <param name="prompt">Text used to ask the user for input.</param>
 		/// <returns>Returns a single line of text from user.</returns>
 		public static string GetInput( string prompt ) {
-			Console.WriteLine( "{0}:", prompt );
+			Console.Write( "{0}: ", prompt );
 			return Console.ReadLine();
 		}
 
@@ -179,7 +179,7 @@ namespace CAB201 {
 		/// <param name="prompt">Text used to ask the user for input.</param>
 		/// <returns>Returns a single line of text from user.</returns>
 		public static string GetPassword( string prompt ) {
-			Console.WriteLine( "{0}:", prompt );
+			Console.Write( "{0}: ", prompt );
 			StringBuilder password = new System.Text.StringBuilder();
 
 			while ( true ) {

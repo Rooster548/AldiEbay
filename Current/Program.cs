@@ -18,6 +18,12 @@ namespace UserInterfaceDemo {
 		/// When user selects 4, program terminates.
 		/// </summary>
 		static void MainMenu() {
+			Account matt = new Account("Matt");
+			matt.printDetails();
+			Console.WriteLine(matt.getDetails());
+			Account ryan = new Account();
+			ryan.printDetails();
+			return;
 			const int REGISTER = 0, LOGIN = 1, EXIT = 2;
 			///const int READ_INT = 0, READ_DOUBLE = 1, READ_BOOL = 2, GET_PASSWORD = 3, EXIT = 4;
 				
@@ -29,13 +35,18 @@ namespace UserInterfaceDemo {
 				int option = UserInterface.GetOption("Select one of the options",
 					"Register", "Login", "Exit"
 				);
-
+				string fullName, username, password, address;
 				switch ( option ) {
 					case REGISTER: 
-						Console.WriteLine("Registered"); 
+						 fullName = UserInterface.GetInput("Full name");
+						 username = UserInterface.GetInput("Username");
+						 password = UserInterface.GetPassword("Password");
+						 address = UserInterface.GetInput("Address");
 						break;
 					case LOGIN:
 						Console.WriteLine("Logged in");
+						username = UserInterface.GetInput("Username");
+						password = UserInterface.GetPassword("Password");
 						break;
 					case EXIT: 
 						running = false; 
