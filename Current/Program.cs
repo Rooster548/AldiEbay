@@ -9,6 +9,8 @@ namespace UserInterfaceDemo {
 	/// Demonstration program for UserInterface class.
 	/// </summary>
 	public class Program {
+		private static List<Product> products = new List<Product>();
+		private static List<Account> accounts = new List<Account>();
 		static void Main( string[] args ) {
 			MainMenu();
 		}
@@ -18,96 +20,125 @@ namespace UserInterfaceDemo {
 		/// When user selects 4, program terminates.
 		/// </summary>
 		static void MainMenu() {
-			const int REGISTER = 0, LOGIN = 1, EXIT = 2;
+			const int REGISTER_ACCOUNT = 0, LOGIN = 1, EXIT = 2;
+			const int REGISTER_ITEM = 0, LIST = 1, SEARCH = 2, PLACE_BID = 3, LIST_BID = 4, SELL_BID = 5, LOGOUT = 6;
+			int option;
 			///const int READ_INT = 0, READ_DOUBLE = 1, READ_BOOL = 2, GET_PASSWORD = 3, EXIT = 4;
-				
-			Console.WriteLine( "Welcome to the UserInterface Demo program." );
 
-			bool running = true;
-			List<Account> accounts = new List<Account>();
-			while ( running ) {
-				int option = UserInterface.GetOption("Select one of the options",
+			Console.WriteLine( "Welcome to the UserInterface Demo program." );
+			accounts.Add(new Account("Matt", "pass"));
+			int running = 1;
+			int accountID;
+			accountID = 0;
+			while (running > 0)
+			{
+				switch (running)
+				{
+					case 0:
+
+						break;
+
+					case 1:
+						 option = UserInterface.GetOption("Select one of the options",
 					"Register", "Login", "Exit"
 				);
-				string fullName, username, password, address;
-				switch ( option ) {
-					case REGISTER:
-						Account account = new Account();
-						fullName = UserInterface.GetInput("Full name");
-						account.setFullName(fullName);
-						username = UserInterface.GetInput("Username");
-					    account.setUsername(username);
-						password = UserInterface.GetPassword("Password");
-						account.setPassword(password);
-						address = UserInterface.GetInput("Address");
-						account.setAddress(address);
-						account.printDetails();
-						accounts.Add(account);
-						Console.WriteLine("number of accounts reg" + accounts.Count);
+						
+						switch (option)
+						{
+							case REGISTER_ACCOUNT:
+								string fullName, username, password, address;
+								Account account = new Account();
+								fullName = UserInterface.GetInput("Full name");
+								account.setFullName(fullName);
+								username = UserInterface.GetInput("Username");
+								account.setUsername(username);
+								password = UserInterface.GetPassword("Password");
+								account.setPassword(password);
+								address = UserInterface.GetInput("Address");
+								account.setAddress(address);
+								account.printDetails();
+								accounts.Add(account);
+								Console.WriteLine("number of accounts reg" + accounts.Count);
+								break;
+							case LOGIN:
+								Console.WriteLine("Logged in");
+								username = UserInterface.GetInput("Username");
+								password = UserInterface.GetPassword("Password");
+								for (int i = 0; i < accounts.Count; i++)
+								{
+									if (accounts[i].checkLogin(username, password))
+									{
+										Console.WriteLine("Welcome, {0} to aldiEbay", accounts[i].getFullname());
+										accountID = i;
+										running = 2;
+									}
+								}
+								break;
+							case EXIT:
+								running = 0;
+								break;
+							default: break;
+						}
 						break;
-					case LOGIN:
-						Console.WriteLine("Logged in");
-						username = UserInterface.GetInput("Username");
-						password = UserInterface.GetPassword("Password");
-						for (int i = 0; i < accounts.Count; i++)
+					case 2:
+						 option = UserInterface.GetOption("Select one of the options",
+					"Register my item for sale", "List my items", "Search for items", "Place a bid on an item", "List bids received for my items", "Sell one of my item to highest bidder", "logout");
+						switch (option)
                         {
-							if (accounts[i].checkLogin(username, password))
-                            {
-								Console.WriteLine("Welcome, {0} to aldiEbay", accounts[i].getFullname());
-                            }
-                        }
-						break;
-					case EXIT: 
-						running = false; 
+                            case REGISTER_ITEM:
+								string type, description;
+								double inital;
+								Product product = new Product();
+								type = UserInterface.GetInput("Type");
+								product.setType(type);
+								description = UserInterface.GetInput("description");
+								product.setDescription(description);
+								inital = UserInterface.GetDouble("Inital price",0,100000);
+								product.setInital(inital);
+								product.setOwnerID(accountID);
+								product.printDetails();
+								products.Add(product);
+								Console.WriteLine("number of accounts reg" + accounts.Count);
+								Console.WriteLine("hello");
+                                break;
+							case LIST:
+								Console.WriteLine("Products list");
+								getProductsByUser(accountID);
+								break;
+							case SEARCH:
+								break;
+							case PLACE_BID:
+								break;
+							case LIST_BID:
+								break;
+							case SELL_BID:
+								break;
+							case LOGOUT:
+								running = 1;
+								break;
+							default: break;
+
+
+						}
+
+
 						break;
 					default: break;
 				}
+
 			}
+				
 		}
 
-		/// <summary>
-		/// Demonstrates the GetInt function(s).
-		/// </summary>
-		private static void DemoGetInt() {
-			int lowerBound = UserInterface.GetInt("Please enter an integer lower bound of an interval");
-			int upperBound = UserInterface.GetInt("Please enter an integer upper bound of an interval");
-			int between = UserInterface.GetInt(
-				$"Please enter an integer between {lowerBound} and {upperBound}",
-				lowerBound,
-				upperBound
-			);
-			Console.WriteLine( $"The supplied value is {between}." );
-		}
-
-		/// <summary>
-		/// Demonstrate the GetDouble function(s).
-		/// </summary>
-		private static void DemoGetDouble() {
-			double lowerBound = UserInterface.GetDouble("Please enter a floating point lower bound of an interval");
-			double upperBound = UserInterface.GetDouble("Please enter a floating point upper bound of an interval");
-			double between = UserInterface.GetDouble(
-				$"Please enter a floating point value between {lowerBound} and {upperBound}",
-				lowerBound,
-				upperBound
-			);
-			Console.WriteLine( $"The supplied value is {between}." );
-		}
-
-		/// <summary>
-		/// Demonstrate the GetBool function(s).
-		/// </summary>
-		private static void DemoGetBool()
-		{
-			bool boolean = UserInterface.GetBool("Enter a Boolean");
-			Console.WriteLine($"The supplied value is {boolean}.");
-		}
-
-		/// <summary>
-		/// Demonstrate the GetPassword function.
-		/// </summary>
-		private static void DemoGetPassword() {
-			string password = UserInterface.GetPassword("Please type a password");
-			Console.WriteLine( $"The supplied value is {password}." );
-		}
+		private static void getProductsByUser(int accountID)
+        {
+			for (int i = 0; i < products.Count; i++)
+            {
+				if(products[i].getOwnerID()  == accountID)
+                {
+					Console.WriteLine(products[i]);
+                }
+            }
+        }
 	}
 }

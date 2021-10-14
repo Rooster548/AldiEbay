@@ -11,6 +11,14 @@ public class Account
 		address = "default address";
 		username = "default username";
 	}
+	public Account(string username, string password)
+	{
+		Console.WriteLine("A new account has been made");
+		fullName = "default name";
+		this.password = password;
+		address = "default ";
+		this.username = username;
+	}
 	public Boolean setFullName(string fullName)
     {
 		if (!String.IsNullOrEmpty(fullName)){
