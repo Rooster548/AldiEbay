@@ -5,7 +5,7 @@ public class Product
 {
 	private string type, description;
 	private double inital;
-	private int ownerID;
+	private int ownerID, productID;
 	List<Bid> bids = new List<Bid>();
 
 
@@ -16,12 +16,23 @@ public class Product
 		description = "default description";
 		inital = 0;
 	}
-	public Product(string type,string description, double inital, int accountID)
+	public Product(string type,string description, double inital, int accountID, int productID)
     {
 		this.type = type;
 		this.description = description;
 		this.inital = inital;
 		this.ownerID = accountID;
+		this.productID = productID;
+    }
+
+	public int getProductID()
+    {
+		return this.productID;
+    }
+
+	public void setProductID(int productID)
+    {
+		this.productID = productID;
     }
 	public Boolean setType(string type)
 	{
@@ -75,11 +86,19 @@ public class Product
     }
     public override string ToString()
     {
-        return type + ", " + description + ", $" + inital;
+        return type + ", " + description + ", $" + inital + " Current Bid $" + getMin() ;
     }
-	public bool placeBid(double bidAmount, int accountID)
+	public bool placeBid(double bidAmount, string username, bool deliveryMethod)
     {
-		Bid bid = new Bid(bidAmount,accountID);
+		Bid bid;
+        if (deliveryMethod)
+        {
+			bid = new BidDelivery(bidAmount, username);
+        }
+        else
+        {
+			bid = new Bid(bidAmount, username);
+		}
 		bids.Add(bid);
 		return false;
     }
@@ -107,5 +126,17 @@ public class Product
 		}
 		return output;
 	}
+	public string sellItem()
+    {
+
+		string output = "";
+		output += bids[bids.Count - 1].getName();
+		output += " Is the highest bider";
+        output += "\nMoney sent to the auction house: $" + bids[bids.Count - 1].getFees();
+		output += "\n Tax payable: $" + bids[bids.Count-1].getTax();
+
+        return output;
+    }
+	
 }
 

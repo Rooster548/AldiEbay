@@ -79,9 +79,10 @@ namespace UserInterfaceDemo {
 						
 						option = UserInterface.GetOption("Select one of the options",
 					"Register my item for sale", "List my items", "Search for items", "Place a bid on an item", "List bids received for my items", "Sell one of my item to highest bidder", "logout");
+						Console.Write("\n");
 						switch (option)
-                        {
-                            case REGISTER_ITEM:
+						{
+							case REGISTER_ITEM:
 								string type, description;
 								double inital;
 								Product product = new Product();
@@ -89,16 +90,15 @@ namespace UserInterfaceDemo {
 								product.setType(type);
 								description = UserInterface.GetInput("description");
 								product.setDescription(description);
-								inital = UserInterface.GetDouble("Inital price",0,100000);
+								inital = UserInterface.GetDouble("Inital price", 0, 100000);
 								product.setInital(inital);
 								product.setOwnerID(accountID);
 								product.printDetails();
 								ah.addProduct(product);
-								Console.WriteLine("hello");
-                                break;
+								break;
 							case LIST:
 								Console.WriteLine("Products list");
-								List<Product> productsByUser =  ah.getProductsByUser(accountID);
+								List<Product> productsByUser = ah.getProductsByUser(accountID);
 								printProducts(productsByUser);
 								break;
 							case SEARCH:
@@ -111,18 +111,12 @@ namespace UserInterfaceDemo {
 								List<Product> productsByType2 = ah.searchProductsByType(query2);
 								Console.WriteLine("Choose one of the following products:");
 								printProducts(productsByType2);
-								int productIndex = UserInterface.GetInt("Index:",0,productsByType2.Count)-1;
+								int productIndex = UserInterface.GetInt("Index:", 0, productsByType2.Count) - 1;
 								Product bidProduct = productsByType2[productIndex];
-								double bidAmount = UserInterface.GetDouble("Enter bid $",bidProduct.getMin(),Double.PositiveInfinity);
+								double bidAmount = UserInterface.GetDouble("Enter bid $", bidProduct.getMin(), Double.PositiveInfinity);
 								bool deliveryMethod = UserInterface.GetBool("Home Delivery");
-                                if (deliveryMethod)
-                                {
-
-                                }
-                                else
-                                {
-									bidProduct.placeBid(bidAmount, accountID);
-                                }
+								bidProduct.placeBid(bidAmount, ah.getAccount(accountID).getFullname(), deliveryMethod);
+								
 								break;
 							case LIST_BID:
 								List<Product> productsByUser2 = ah.getProductsByUser(accountID);
@@ -132,6 +126,15 @@ namespace UserInterfaceDemo {
 								}
 								break;
 							case SELL_BID:
+								List<Product> productsByUser3 = ah.getProductsByUser(accountID);
+								for (int i = 0; i < productsByUser3.Count; i++)
+								{
+									Console.WriteLine((i + 1) + ") " + productsByUser3[i].getFormattedBids());
+								}
+								int productNumber = UserInterface.GetInt("Enter a product number", 0, productsByUser3.Count) - 1;
+								Console.WriteLine(productsByUser3[productNumber].sellItem());
+
+
 								break;
 							case LOGOUT:
 								running = 1;
@@ -140,6 +143,7 @@ namespace UserInterfaceDemo {
 
 
 						}
+						Console.Write("\n");
 
 
 						break;

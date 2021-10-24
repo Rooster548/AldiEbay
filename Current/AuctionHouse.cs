@@ -10,14 +10,19 @@ public class AuctionHouse
 		addAccount(new Account("Matt", "pass"));
 		addAccount(new Account("Ryan", "pass"));
 		addAccount(new Account("Ethan", "pass"));
-		Product product = new Product("Shirt", "a small t-shirt", 10.5, 1);
-		product.placeBid(15, 0);
-		product.placeBid(25, 2);
+		Product product = new Product("Shirt", "a small t-shirt", 10.5, 1,0);
+		product.placeBid(15, "Matt",true);
+		product.placeBid(25, "Ethan",false);
 		addProduct(product);
+		Product product1 = new Product("Shirt1", "a small t-shirt", 10.5, 1,1);
+		product1.placeBid(15, "Matt", false);
+		product1.placeBid(25, "Ethan", true);
+		addProduct(product1);
 
 	}
 	public void  addProduct(Product product)
     {
+		product.setProductID(products.Count);
 		products.Add(product);
 		
     }
@@ -65,5 +70,12 @@ public class AuctionHouse
 			}
 		}
 		return tempProducts;
+	}
+	public string sellItem(int productID)
+    {
+		string output = products[productID].sellItem();
+		int actualProductID = products[productID].getProductID();
+		products.RemoveAt(actualProductID);
+		return output;
 	}
 }
