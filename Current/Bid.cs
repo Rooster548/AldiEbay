@@ -2,47 +2,51 @@
 
 public class Bid
 {
+	
+	
+	private const double TAX = 0.15;
 	protected double bidAmount;
-	private string username;
-	private const double tax = 0.15;
-	public Bid()
+	public double BidAmount
 	{
+		get { return bidAmount; }
+		set { bidAmount = value; }
 	}
+	private string username;
+	public string Username
+    {
+        get { return username; }
+    }
 	public Bid(double bidAmount, string username)
     {
 		this.bidAmount = bidAmount;
 		this.username = username;
     }
-	public void setBidAmount(double bidAmount)
-    {
-		if (bidAmount >= 0)
-        {
-			this.bidAmount = bidAmount;
-        }
+	/// <summary>
+	/// Gets the static AuctionHouse fees depend on wether if it's home delivery or click and collect.
+	/// </summary>
+	/// <returns> returns a double containing the fees</returns>
 
-    }
-	public double getBidAmount()
-    {
-		return this.bidAmount;
-    }
+	public virtual double getFees() //
+	{
+		return 10;
+	}
+	/// <summary>
+	/// Gets the  tax depend on wether if it's home delivery or click and collect.
+	/// </summary>
+	/// <returns> returns a double containing the tax</returns>
+	public virtual double getTax() // 
+	{
+		return Math.Round ( bidAmount * TAX,2);
+
+	}
+
 	public override string ToString()
 	{
 		return "  " + username + " has bid $" + bidAmount;
 	}
 
-	public string getName()
-    {
-		return this.username;	
-    }
+	
 
-	public virtual double getFees()
-	{
-		return 10;
-	}
-	public virtual double getTax()
-    {
-		return bidAmount * tax;
-
-	}
+	
 }
 

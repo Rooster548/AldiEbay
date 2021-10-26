@@ -3,9 +3,38 @@ using System.Collections.Generic;
 
 public class Product
 {
-	private string type, description;
+	private int ownerID;
+	public int OwnerID
+    {
+		get { return ownerID;}
+		set { ownerID = value;}
+    }
+	private int productID;
+	public int ProductID
+	{
+		get { return productID; }
+		set { productID = value; }
+	}
+	private string type;
+	public string Type
+    {
+        set { type = value; }
+		get { return type; }
+    }
+    private string description;
+	public string Description
+    {
+        set { description = value; }
+		private get { return description; }
+    }
 	private double inital;
-	private int ownerID, productID;
+	public double Inital
+    {
+		set { inital = value; }
+		private get { return inital; }
+    }
+
+
 	List<Bid> bids = new List<Bid>();
 
 
@@ -14,53 +43,16 @@ public class Product
 		Console.WriteLine("A new account has been made");
 		type = "MISC";
 		description = "default description";
-		inital = 0;
+		Inital = 0;
 	}
 	public Product(string type,string description, double inital, int accountID, int productID)
     {
-		this.type = type;
-		this.description = description;
-		this.inital = inital;
-		this.ownerID = accountID;
-		this.productID = productID;
+		Type = type;
+		Description = description;
+		Inital = inital;
+		OwnerID = accountID;
+		ProductID = productID;
     }
-
-	public int getProductID()
-    {
-		return this.productID;
-    }
-
-	public void setProductID(int productID)
-    {
-		this.productID = productID;
-    }
-	public Boolean setType(string type)
-	{
-		if (!String.IsNullOrEmpty(type))
-		{
-			this.type = type;
-			return true;
-		}
-		return false;
-	}
-	public Boolean setDescription(string description)
-	{
-		if (!String.IsNullOrEmpty(description))
-		{
-			this.description = description;
-			return true;
-		}
-		return false;
-	}
-	public Boolean setInital(double inital)
-	{
-		if (inital >= 0)
-		{
-			this.inital = inital;
-			return true;
-		}
-		return false;
-	}
 	public void printDetails()
 	{
 		Console.WriteLine("-------------");
@@ -70,23 +62,10 @@ public class Product
 		Console.WriteLine(ownerID);
 		Console.WriteLine("-------------");
 	}
-	public void setOwnerID(int ownerID)
-    {
-		this.ownerID = ownerID;
-
-
-    }
-	public int getOwnerID()
-    {
-		return this.ownerID;
-    }
-	public string getType()
-    {
-		return this.type;
-    }
+	
     public override string ToString()
     {
-        return type + ", " + description + ", $" + inital + " Current Bid $" + getMin() ;
+        return type + ", " + description + ", $" + inital + " Current Bid $" + getMin() + "id" + productID ;
     }
 	public bool placeBid(double bidAmount, string username, bool deliveryMethod)
     {
@@ -110,7 +89,7 @@ public class Product
 		}
         else
         {
-			return bids[bids.Count - 1].getBidAmount();
+			return bids[bids.Count - 1].BidAmount;
         }
 		
 
@@ -130,7 +109,7 @@ public class Product
     {
 
 		string output = "";
-		output += bids[bids.Count - 1].getName();
+		output += bids[bids.Count - 1].Username;
 		output += " Is the highest bider";
         output += "\nMoney sent to the auction house: $" + bids[bids.Count - 1].getFees();
 		output += "\n Tax payable: $" + bids[bids.Count-1].getTax();

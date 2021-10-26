@@ -92,6 +92,7 @@ namespace CAB201 {
 		/// <param name="max">The upper bound.</param>
 		/// <returns>A value x such that lowerBound <= x <= upperBound.</returns>
 		public static double GetDouble( string prompt, double min, double max ) {
+			Console.WriteLine("min: " + min);
 			if ( min > max ) {
 				double t = min;
 				min = max;

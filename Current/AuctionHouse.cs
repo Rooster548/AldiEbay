@@ -14,15 +14,17 @@ public class AuctionHouse
 		product.placeBid(15, "Matt",true);
 		product.placeBid(25, "Ethan",false);
 		addProduct(product);
-		Product product1 = new Product("Shirt1", "a small t-shirt", 10.5, 1,1);
+		Product product1 = new Product("Shirt", "a med t-shirt", 10.5, 1,1);
 		product1.placeBid(15, "Matt", false);
 		product1.placeBid(25, "Ethan", true);
 		addProduct(product1);
+		Product product2 = new Product("Shirt", "a big t-shirt", 10.5, 0, 2);
+		addProduct(product2);
 
 	}
 	public void  addProduct(Product product)
     {
-		product.setProductID(products.Count);
+		product.ProductID = products.Count;
 		products.Add(product);
 		
     }
@@ -47,7 +49,7 @@ public class AuctionHouse
 		List<Product> tempProducts = new List<Product>();
 		for (int i = 0; i < products.Count; i++)
 		{
-			if (products[i].getOwnerID() == accountID)
+			if (products[i].OwnerID == accountID)
 			{
 				tempProducts.Add(products[i]);
 			}
@@ -63,7 +65,7 @@ public class AuctionHouse
 		List<Product> tempProducts = new List<Product>();
 		for (int i = 0; i < products.Count; i++)
 		{
-			if (products[i].getType().ToLower() == query.ToLower())
+			if (products[i].Type.ToLower() == query.ToLower())
 			{
 
 				tempProducts.Add(products[i]);
@@ -74,8 +76,7 @@ public class AuctionHouse
 	public string sellItem(int productID)
     {
 		string output = products[productID].sellItem();
-		int actualProductID = products[productID].getProductID();
-		products.RemoveAt(actualProductID);
+		products.RemoveAt(productID);
 		return output;
 	}
 }

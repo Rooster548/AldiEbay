@@ -2,11 +2,36 @@
 
 public class Account
 {
-	private string fullName, password, address, username;
-	public Account()
+
+	private string username;
+	public string Username
+	{
+		set { username = value; }
+		get { return username; }
+	}
+	private string fullname;
+	public string Fullname
+    {
+        set { fullname = value; }
+		get { return fullname; }
+    }
+    private string password;
+	public string Password
+    {
+		set { password = value; }
+        private get { return password;  }
+    }
+	private string address;
+	public string Address
+    {
+		set { address = value;  }
+		private get { return address;  }
+    }
+
+    public Account()
 	{
 		Console.WriteLine("A new account has been made");
-		fullName = "default name";
+		Fullname = "default name";
 		password = "default password";
 		address = "default address";
 		username = "default username";
@@ -14,67 +39,28 @@ public class Account
 	public Account(string username, string password)
 	{
 		Console.WriteLine("A new account has been made");
-		fullName = "default name";
+		fullname = "default name";
 		this.password = password;
 		address = "default ";
 		this.username = username;
 	}
-	public Boolean setFullName(string fullName)
-    {
-		if (!String.IsNullOrEmpty(fullName)){
-			this.fullName = fullName;
-			return true;
-		}
-		return false;
-    }
-	public Boolean setPassword(string password)
-	{
-		if (!String.IsNullOrEmpty(password))
-		{
-			this.password = password;
-			return true;
-		}
-		return false;
-	}
-	public Boolean setAddress(string address)
-	{
-		if (!String.IsNullOrEmpty(address))
-		{
-			this.address = address;
-			return true;
-		}
-		return false;
-	}
-	public Boolean setUsername(string username)
-	{
-		if (!String.IsNullOrEmpty(username))
-		{
-			this.username = username;
-			return true;
-		}
-		return false;
-	}
+
+	
+	
 	public void printDetails()
     {
 		Console.WriteLine("-------------");
-		Console.WriteLine(fullName);
+		Console.WriteLine(Fullname);
 		Console.WriteLine(username);
 		Console.WriteLine(password);
 		Console.WriteLine(address);
 		Console.WriteLine("-------------");
 	}
-	public string getDetails()
-    {
-		return fullName;
 
-    }
 	public Boolean checkLogin(string username,string password)
     {
 		return (this.username == username && this.password == password);
     }
-	public string getFullname()
-    {
-		return fullName;
-    }
+	
 }
 

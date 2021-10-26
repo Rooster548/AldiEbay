@@ -18,7 +18,7 @@ namespace UserInterfaceDemo {
 		/// When user selects 4, program terminates.
 		/// </summary>
 		static void MainMenu() {
-			AuctionHouse ah = new AuctionHouse();
+			AuctionHouse ah = new AuctionHouse(); // Makes auctionhouse abstract
 			const int REGISTER_ACCOUNT = 0, LOGIN = 1, EXIT = 2;
 			const int REGISTER_ITEM = 0, LIST = 1, SEARCH = 2, PLACE_BID = 3, LIST_BID = 4, SELL_BID = 5, LOGOUT = 6;
 			int option;
@@ -47,13 +47,13 @@ namespace UserInterfaceDemo {
 								string fullName, username, password, address;
 								Account account = new Account();
 								fullName = UserInterface.GetInput("Full name");
-								account.setFullName(fullName);
+								account.Fullname = fullName;
 								username = UserInterface.GetInput("Username");
-								account.setUsername(username);
+								account.Username = username;
 								password = UserInterface.GetPassword("Password");
-								account.setPassword(password);
+								account.Password = password;
 								address = UserInterface.GetInput("Address");
-								account.setAddress(address);
+								account.Address = address;
 								account.printDetails();
 								ah.addAccount(account);
 
@@ -66,7 +66,7 @@ namespace UserInterfaceDemo {
 								if (accountID != -1)
                                 {
 									running = 2;
-									Console.WriteLine("Welcome, {0} to aldiEbay", ah.getAccount(accountID).getFullname());
+									Console.WriteLine("Welcome, {0} to aldiEbay", ah.getAccount(accountID).Username);
                                 }
 								break;
 							case EXIT:
@@ -87,12 +87,13 @@ namespace UserInterfaceDemo {
 								double inital;
 								Product product = new Product();
 								type = UserInterface.GetInput("Type");
-								product.setType(type);
+								product.Type = type;
 								description = UserInterface.GetInput("description");
-								product.setDescription(description);
-								inital = UserInterface.GetDouble("Inital price", 0, 100000);
-								product.setInital(inital);
-								product.setOwnerID(accountID);
+								product.Description = description;
+								inital = UserInterface.GetDouble("Inital price", 0, Double.PositiveInfinity);
+								product.Inital = inital;
+								Console.WriteLine(accountID);
+								product.OwnerID = accountID;
 								product.printDetails();
 								ah.addProduct(product);
 								break;
@@ -115,7 +116,7 @@ namespace UserInterfaceDemo {
 								Product bidProduct = productsByType2[productIndex];
 								double bidAmount = UserInterface.GetDouble("Enter bid $", bidProduct.getMin(), Double.PositiveInfinity);
 								bool deliveryMethod = UserInterface.GetBool("Home Delivery");
-								bidProduct.placeBid(bidAmount, ah.getAccount(accountID).getFullname(), deliveryMethod);
+								bidProduct.placeBid(bidAmount, ah.getAccount(accountID).Username, deliveryMethod);
 								
 								break;
 							case LIST_BID:
@@ -132,7 +133,10 @@ namespace UserInterfaceDemo {
 									Console.WriteLine((i + 1) + ") " + productsByUser3[i].getFormattedBids());
 								}
 								int productNumber = UserInterface.GetInt("Enter a product number", 0, productsByUser3.Count) - 1;
-								Console.WriteLine(productsByUser3[productNumber].sellItem());
+								Console.WriteLine("Hello how are you?" + productNumber);
+								int actualProductID = productsByUser3[productNumber].ProductID;
+								Console.WriteLine("Hello how are you?" + actualProductID); 
+								Console.WriteLine(ah.sellItem(actualProductID));
 
 
 								break;
