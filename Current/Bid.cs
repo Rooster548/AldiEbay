@@ -39,7 +39,10 @@ public class Bid
 		return Math.Round ( bidAmount * TAX,2);
 
 	}
-
+	/// <summary>
+	/// ToString used to return the amount a user has bid.
+	/// </summary>
+	/// <returns>Returns a string  representing the amount a user has bid</returns>
 	public override string ToString()
 	{
 		return "  " + username + " has bid $" + bidAmount;

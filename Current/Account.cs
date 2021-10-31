@@ -2,8 +2,11 @@
 
 public class Account
 {
-
+	/// <summary>
+	///  
+	
 	private string username;
+	
 	public string Username
 	{
 		set { username = value; }
@@ -28,7 +31,10 @@ public class Account
 		private get { return address;  }
     }
 
-    public Account()
+	/// <summary>
+	/// Default constructer that makes a blank template account.
+	/// </summary>
+	public Account()
 	{
 		Console.WriteLine("A new account has been made");
 		Fullname = "default name";
@@ -36,6 +42,11 @@ public class Account
 		address = "default address";
 		username = "default username";
 	}
+	/// <summary>
+	/// Makes an account with username and password.
+	/// </summary>
+	/// <param name="username">Is the unique username for the user.</param>
+	/// <param name="password">Is the unique password for the user.</param>
 	public Account(string username, string password)
 	{
 		Console.WriteLine("A new account has been made");
@@ -45,8 +56,10 @@ public class Account
 		this.username = username;
 	}
 
-	
-	
+
+	/// <summary>
+	/// Prints all the details of the account
+	/// </summary>
 	public void printDetails()
     {
 		Console.WriteLine("-------------");
@@ -57,6 +70,12 @@ public class Account
 		Console.WriteLine("-------------");
 	}
 
+	/// <summary>
+	///Gets the credentials against an account and returns true or false
+	/// </summary>
+	/// <param name="username">This is the username to check the user account.</param>
+	/// <param name="password">This is the password to check the user account.</param>
+	/// <returns>Returns true or false based on if the credentials match</returns>	
 	public Boolean checkLogin(string username,string password)
     {
 		return (this.username == username && this.password == password);

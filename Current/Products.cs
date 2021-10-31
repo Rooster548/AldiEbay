@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class Product
 {
+
 	private int ownerID;
 	public int OwnerID
     {
@@ -37,14 +38,25 @@ public class Product
 
 	List<Bid> bids = new List<Bid>();
 
-
+	/// <summary>
+	/// Creates a new template product.
+	/// </summary>
+	/// <returns>Returns a new product</returns>
 	public Product()
 	{
-		Console.WriteLine("A new account has been made");
 		type = "MISC";
 		description = "default description";
 		Inital = 0;
 	}
+	/// <summary>
+	/// Creates a new product with provided values
+	/// </summary>
+	/// <param name="type">Type of the product(Shirts,Pants)</param>
+	/// <param name="description">Description of the product</param>
+	/// <param name="inital">Inital value of the product</param>
+	/// <param name="accountID">Sets the owner of the product</param>
+	/// <param name="productID">Sets a unique ID for the product</param>
+	/// <returns>Returns a product with provided values</returns>
 	public Product(string type,string description, double inital, int accountID, int productID)
     {
 		Type = type;
@@ -53,6 +65,9 @@ public class Product
 		OwnerID = accountID;
 		ProductID = productID;
     }
+	/// <summary>
+	/// Prints all the details of the product
+	/// </summary>
 	public void printDetails()
 	{
 		Console.WriteLine("-------------");
@@ -62,12 +77,22 @@ public class Product
 		Console.WriteLine(ownerID);
 		Console.WriteLine("-------------");
 	}
-	
-    public override string ToString()
+
+	/// <summary>
+	/// ToString used to return the product information.
+	/// </summary>
+	/// <returns>Returns a string  representing a product</returns>
+	public override string ToString()
     {
-        return type + ", " + description + ", $" + inital + " Current Bid $" + getMin() + "id" + productID ;
+		return type + ", " + description + ", $" + inital + " Current Bid $" + getMin();
     }
-	public bool placeBid(double bidAmount, string username, bool deliveryMethod)
+	/// <summary>
+	/// Creates the method for the user to place a bid on the current product
+	/// </summary>
+	/// <param name="bidAmount">Amount of the bid the user is placing</param>
+	/// <param name="username">Username of the person who bid</param>
+	/// <param name="deliveryMethod">Sets if its home delivery or click n collect (true means delivery, false means click n collect)</param>
+	public void placeBid(double bidAmount, string username, bool deliveryMethod)
     {
 		Bid bid;
         if (deliveryMethod)
@@ -79,8 +104,11 @@ public class Product
 			bid = new Bid(bidAmount, username);
 		}
 		bids.Add(bid);
-		return false;
     }
+	/// <summary>
+	/// Gets a validated floating point between the designated lower and upper bounds.
+	/// </summary>
+	/// <returns>Returns the minimum allowed new bid</returns>
 	public double getMin()
     {
 		if (bids.Count == 0)
@@ -94,7 +122,10 @@ public class Product
 		
 
     }
-
+	/// <summary>
+	/// Uses a for loop to list all of the new bids made on a product.
+	/// </summary>
+	/// <returns>returns formatted list of bids made on a product</returns>
 	public string getFormattedBids()
     {
 		string output = this.ToString();
@@ -105,6 +136,10 @@ public class Product
 		}
 		return output;
 	}
+	/// <summary>
+	/// displays the information for when the item has been sold.
+	/// </summary>
+	/// <returns>returns all the information involved in selling the item.</returns>
 	public string sellItem()
     {
 
